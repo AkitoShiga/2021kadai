@@ -164,3 +164,4 @@
 2021/05/30 16:18:13 [notice] 1#1: start worker process 31
 2021/05/30 16:18:13 [notice] 1#1: start worker process 32
 2021/05/30 16:18:13 [notice] 1#1: start worker process 33
+2021/05/30 16:56:09 [error] 30#30: *11 open() "/2021kadai/app/public/hoyiu" failed (2: No such file or directory), client: 172.21.0.1, server: , request: "GET /hoyiu HTTP/1.1", host: "localhost"
