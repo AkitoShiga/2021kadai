@@ -43,3 +43,7 @@ RUN { \
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 COPY --from=node:14.16.1 /usr/local/bin /usr/local/bin
 COPY --from=node:14.16.1 /usr/local/lib /usr/local/lib
+# Composer
+
+# composer global require laravel/installer
+# laravel=$HOME/.config/composer/vendor/bin

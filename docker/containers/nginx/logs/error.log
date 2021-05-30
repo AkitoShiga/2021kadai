@@ -128,3 +128,39 @@
 2021/05/30 14:25:21 [notice] 1#1: start worker process 33
 2021/05/30 14:25:21 [notice] 1#1: start worker process 34
 2021/05/30 14:25:34 [error] 31#31: *2 rewrite or internal redirection cycle while internally redirecting to "/app/index.php", client: 172.21.0.1, server: , request: "GET / HTTP/1.1", host: "localhost"
+2021/05/30 16:08:44 [error] 31#31: *11 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /index.php HTTP/1.1", upstream: "fastcgi://172.21.0.4:9000", host: "localhost"
+2021/05/30 16:08:45 [error] 31#31: *11 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /index.php HTTP/1.1", upstream: "fastcgi://172.21.0.4:9000", host: "localhost"
+2021/05/30 16:09:34 [error] 31#31: *11 rewrite or internal redirection cycle while internally redirecting to "/app/index.php", client: 172.21.0.1, server: , request: "GET /app/publicindex.php HTTP/1.1", host: "localhost"
+2021/05/30 16:09:41 [error] 32#32: *12 rewrite or internal redirection cycle while internally redirecting to "/app/index.php", client: 172.21.0.1, server: , request: "GET /app/public/index.php HTTP/1.1", host: "localhost"
+2021/05/30 16:09:46 [error] 31#31: *15 rewrite or internal redirection cycle while internally redirecting to "/app/index.php", client: 172.21.0.1, server: , request: "GET /public/index.php HTTP/1.1", host: "localhost"
+2021/05/30 16:10:04 [error] 31#31: *16 rewrite or internal redirection cycle while internally redirecting to "/app/index.php", client: 172.21.0.1, server: , request: "GET / HTTP/1.1", host: "localhost"
+2021/05/30 16:10:10 [error] 31#31: *17 FastCGI sent in stderr: "Primary script unknown" while reading response header from upstream, client: 172.21.0.1, server: , request: "GET /index.php HTTP/1.1", upstream: "fastcgi://172.21.0.4:9000", host: "localhost"
+2021/05/30 16:18:11 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2021/05/30 16:18:11 [notice] 31#31: gracefully shutting down
+2021/05/30 16:18:11 [notice] 32#32: gracefully shutting down
+2021/05/30 16:18:11 [notice] 33#33: gracefully shutting down
+2021/05/30 16:18:11 [notice] 33#33: exiting
+2021/05/30 16:18:11 [notice] 34#34: gracefully shutting down
+2021/05/30 16:18:11 [notice] 31#31: exiting
+2021/05/30 16:18:11 [notice] 32#32: exiting
+2021/05/30 16:18:11 [notice] 33#33: exit
+2021/05/30 16:18:11 [notice] 34#34: exiting
+2021/05/30 16:18:11 [notice] 31#31: exit
+2021/05/30 16:18:11 [notice] 32#32: exit
+2021/05/30 16:18:11 [notice] 34#34: exit
+2021/05/30 16:18:11 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2021/05/30 16:18:11 [notice] 1#1: worker process 32 exited with code 0
+2021/05/30 16:18:11 [notice] 1#1: worker process 31 exited with code 0
+2021/05/30 16:18:11 [notice] 1#1: worker process 33 exited with code 0
+2021/05/30 16:18:11 [notice] 1#1: worker process 34 exited with code 0
+2021/05/30 16:18:11 [notice] 1#1: exit
+2021/05/30 16:18:13 [notice] 1#1: using the "epoll" event method
+2021/05/30 16:18:13 [notice] 1#1: nginx/1.21.0
+2021/05/30 16:18:13 [notice] 1#1: built by gcc 8.3.0 (Debian 8.3.0-6) 
+2021/05/30 16:18:13 [notice] 1#1: OS: Linux 4.19.121-linuxkit
+2021/05/30 16:18:13 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2021/05/30 16:18:13 [notice] 1#1: start worker processes
+2021/05/30 16:18:13 [notice] 1#1: start worker process 30
+2021/05/30 16:18:13 [notice] 1#1: start worker process 31
+2021/05/30 16:18:13 [notice] 1#1: start worker process 32
+2021/05/30 16:18:13 [notice] 1#1: start worker process 33

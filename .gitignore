@@ -24,4 +24,6 @@ Homestead.json
 
 # docker
 .env
-docker/containers/nginx/logs/
+./docker/containers/nginx/logs/
+./app/.env
+
