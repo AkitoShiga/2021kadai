@@ -10,7 +10,7 @@ services:
     volumes:
       - ../:/2021kadai
       - ./containers/nginx/logs:/var/log/nginx
-      - ./containers/nginx/kadai.conf:/etc/nginx/conf.d/kadai.conf
+      - ./containers/nginx/conf.d:/etc/nginx/conf.d/
     working_dir: "/2021kadai"
     environment:
       - TZ=${TZ}
