@@ -5,6 +5,7 @@
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
+    "noImplicitAny": false,
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "skipLibCheck": true,
@@ -36,5 +37,8 @@
   ],
   "exclude": [
     "node_modules"
+  ],
+  "types": [
+    "user"
   ]
 }

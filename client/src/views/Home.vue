@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <h3> ユーザー {{ $store.state.userId }}</h3>
+    <p> {{ message }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import axios, { AxiosResponse } from 'axios';
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
-export default class Home extends Vue {}
+
+@Component 
+export default class Home extends Vue {
+  message: string = "";
+  created() {
+    this.fetchHello();
+  }
+  fetchHello(): void {
+    const uri: string = "http://localhost:8080/hello";
+    axios
+      .get(uri)
+      .then(
+        response => {
+          this.message = response.data.message;
+        } 
+      );
+  }
+
+}
 </script>

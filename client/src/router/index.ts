@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
+import Login from '../views/Login.vue'
+import Store from '@/store/index.ts'
 
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
   {
+    name: 'Login',
+    path: '/login',
+    component: Login
+  },
+  {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: { requiresAuth: true }
   },
   {
     path: '/about',
@@ -25,5 +33,21 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+router.beforeEach(
+  (to, from, next) => {
+    if(to.matched.some(record => record.meta.requiresAuth)
+       && !Store.state.userToken
+    ) {
+        next(
+          {
+            path: '/login',
+            query: { redirect: to.fullPath }
+          }
+        );
+      } else {
+        next();
+      }
+  }
+);
 
 export default router
