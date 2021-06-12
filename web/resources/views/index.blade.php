@@ -7,6 +7,6 @@
   <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 <body>
-  <div id="app">TEST</div>
+  <div id="app">test</div>
 </body>
 </html>
