@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/register', 'Auth\RegisterController@register')->name('register');
+Route::post('/register', 'Auth\RegisterController@sendMail')->name('register');
 
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 

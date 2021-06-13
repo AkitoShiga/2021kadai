@@ -1860,7 +1860,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_Header_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Header.vue */ "./resources/js/components/Header.vue");
 /* harmony import */ var _components_Message_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Message.vue */ "./resources/js/components/Message.vue");
-/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./const */ "./resources/js/const.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./const */ "./resources/js/const.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1884,6 +1886,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     Header: _components_Header_vue__WEBPACK_IMPORTED_MODULE_1__.default,
@@ -1904,7 +1907,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             while (1) {
               switch (_context.prev = _context.next) {
                 case 0:
-                  if (!(val === _const__WEBPACK_IMPORTED_MODULE_3__.INTERNAL_SERVER_ERROR)) {
+                  if (!(val === _const__WEBPACK_IMPORTED_MODULE_4__.INTERNAL_SERVER_ERROR)) {
                     _context.next = 4;
                     break;
                   }
@@ -1915,7 +1918,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
 
                 case 4:
-                  if (!(val === _const__WEBPACK_IMPORTED_MODULE_3__.UNAUTHORIZED)) {
+                  if (!(val === _const__WEBPACK_IMPORTED_MODULE_4__.UNAUTHORIZED)) {
                     _context.next = 11;
                     break;
                   }
@@ -1932,7 +1935,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
 
                 case 11:
-                  if (val === _const__WEBPACK_IMPORTED_MODULE_3__.NOT_FOUND) {
+                  if (val === _const__WEBPACK_IMPORTED_MODULE_4__.NOT_FOUND) {
                     _this.$router.push("/not-found");
                   }
 
@@ -1948,6 +1951,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     $route: function $route() {
       this.$store.commit("error/setCode", null);
+    }
+  },
+  created: function created() {
+    var message = js_cookie__WEBPACK_IMPORTED_MODULE_3___default().get("MESSAGE");
+
+    if (message) {
+      js_cookie__WEBPACK_IMPORTED_MODULE_3___default().remove("MESSAGE");
+      this.$store.commit("message/setContent", {
+        content: message,
+        timeout: 6000
+      });
     }
   }
 });
@@ -2292,7 +2306,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 3:
                 if (_this2.apiStatus) {
                   _this2.$store.commit("message/setContent", {
-                    content: "登録しました",
+                    content: "認証メールを送信しました",
                     timeout: 10000
                   });
 
@@ -2535,15 +2549,15 @@ var actions = {
               response = _context.sent;
 
               if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.OK)) {
-                _context.next = 8;
+                _context.next = 7;
                 break;
               }
 
-              context.commit("setApiStatus", true);
-              context.commit("setUser", response.data);
+              context.commit("setApiStatus", true); //context.commit("setUser", response.data);
+
               return _context.abrupt("return", false);
 
-            case 8:
+            case 7:
               context.commit("setApiStatus", false);
 
               if (response.status === _const__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY || response.status === _const__WEBPACK_IMPORTED_MODULE_2__.TOO_MANY_REQUESTS) {
@@ -2554,7 +2568,7 @@ var actions = {
                 });
               }
 
-            case 10:
+            case 9:
             case "end":
               return _context.stop();
           }

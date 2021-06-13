@@ -15,6 +15,7 @@
 <script>
 import Header from "./components/Header.vue";
 import Message from "./components/Message.vue";
+import Cookies from "js-cookie";
 import {
   NOT_FOUND,
   UNAUTHORIZED,
@@ -48,6 +49,20 @@ export default {
     },
     $route() {
       this.$store.commit("error/setCode", null);
+    }
+  },
+  created() {
+
+    const message = Cookies.get("MESSAGE");
+
+    if(message) {
+
+      Cookies.remove("MESSAGE");
+      this.$store.commit("message/setContent", {
+        content: message,
+        timeout: 6000
+
+      });
     }
   }
 };

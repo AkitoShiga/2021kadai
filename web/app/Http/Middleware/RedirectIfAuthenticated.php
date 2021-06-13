@@ -17,13 +17,21 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return mixed
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle(Request $request, Closure $next, $guards)
     {
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect()->route('user');
+
+                if($request->ajax())
+                {
+                    return redirect()->route('user');
+                }
+                else
+                {
+                    return redirect('/');
+                }
             }
         }
 

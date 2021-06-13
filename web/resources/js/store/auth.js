@@ -48,7 +48,7 @@ const actions = {
     if (response.status === OK) {
 
       context.commit("setApiStatus", true);
-      context.commit("setUser", response.data);
+      //context.commit("setUser", response.data);
       return false;
 
     }

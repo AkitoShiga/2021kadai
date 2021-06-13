@@ -200,7 +200,7 @@ export default {
         this.$store.commit(
           "message/setContent",
           {
-            content: "登録しました",
+            content: "認証メールを送信しました",
             timeout: 10000
           }
         );
