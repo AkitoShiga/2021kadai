@@ -1,17 +1,40 @@
 <template>
   <header>
     <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/login">Login</RouterLink>
-    <span @click="logout">Logout</span>
+    <RouterLink
+      v-if="!isLogin"
+      to="/login"
+    >Login</RouterLink>
+    <span
+      v-if="isLogin"
+      @click="logout"
+    >Logout</span>
   </header>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      isLogin: false,
+    }
+  },
   methods: {
     async logout(){
-      alert("logout");
-      this.$router.push("/login");
+
+      await this.$store.dispatch("auth/logout");
+
+      if(this.apiStatus) {
+
+        this.$router.push("/login");
+
+      }
     }
-  }
+  },
+  watch: {
+    isLogin: function() {
+      this.data.isLogin  = this.$store.getters.auth.check();
+    },
+    immideate: true
+  },
 };
 </script>

@@ -24,6 +24,21 @@
       v-show="tab === 1"
     >
       <h2>Login</h2>
+      <div
+        v-if="loginErrors"
+        class="errors"
+      >
+        <ul v-if="loginErrors.email">
+          <li
+            v-for="msg in loginErrors.email"
+            :key="msg"
+          >{{ msg }}</li>
+          <li
+            v-for="msg in loginErrors.password"
+            :key="msg"
+          >{{ msg }}</li>
+        </ul>
+      </div>
       <form @submit.prevent="login">
         <div>Email</div>
         <div>
@@ -50,6 +65,29 @@
       v-show="tab === 2"
     >
       <h2>Register</h2>
+      <div
+        v-if="registerErrors"
+        class="errors"
+      >
+        <ul v-if="registerErrors.name">
+          <li
+            v-for="msg in registerErros.name"
+            :key="msg"
+          >{{ msg }}</li>
+        </ul>
+        <ul v-if="registerErros.email">
+          <li
+            v-for="msg in registerErrors.email"
+            :key="msg"
+          >{{ msg }}</li>
+        </ul>
+        <ul v-if="registerErrors.password">
+          <li
+            v-for="msg in registerErrors.password"
+            :key="msg"
+          >{{ msg }}</li>
+        </ul>
+      </div>
       <form @submit.prevent="register">
         <div>Name</div>
         <div>
@@ -72,13 +110,13 @@
             v-model="registerForm.password"
           />
         </div>
-        <div>Password confirmation</div> 
+        <div>Password confirmation</div>
         <div>
           <input
             type="password"
             v-model="registerForm.password_confirmation"
           />
-        </div> 
+        </div>
         <div>
           <button type="submit">register</button>
         </div>
@@ -127,18 +165,58 @@ export default {
       }
     };
   },
+  computed: {
+    apiStatus() {
+      return this.$store.state.auth.apiStatus;
+    },
+    loginErrors() {
+      return this.$store.state.auth.loginErrorMessages;
+    },
+    registerErrors() {
+      return this.$store.state.auth.registerErrorMessages;
+    },
+  },
   methods: {
     async login() {
-      alert("login");
-      this.clearForm();
+
+      await this.$store.dispatch("auth/login", this.loginForm);
+
+      if(this.apiStatus) {
+
+        this.$router.push("/");
+
+      }
     },
     async register() {
+
       alert("register");
-      this.clearForm();
+      await this.$store.dispatch(
+        "auth/register",
+        this.registerForm
+      );
+
+      if(this.apiStatus) {
+
+        this.$store.commit(
+          "message/setContent",
+          {
+            content: "登録しました",
+            timeout: 10000
+          }
+        );
+        this.clearError();
+        this.clearForm();
+      }
     },
     async forgot() {
+
       alert("forgot");
       this.clearForm();
+    },
+    clearError() {
+      this.$store.commit("auth/setLoginErrorMessages", null);
+      this.$store.commit("auth/setRegisterErrorMessages", null);
+      this.$store.commit("auth/setForgotErrorMessages", null);
     },
     clearForm() {
       //TODO 冗長なのでうまいやり方考えたい
@@ -151,6 +229,11 @@ export default {
       this.forgotForm.email = "";
     },
   },
+  created() {
+
+    this.clearError();
+
+  }
 };
 </script>
 

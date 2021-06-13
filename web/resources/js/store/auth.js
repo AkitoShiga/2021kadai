@@ -6,7 +6,7 @@ import {
   CREATED,
   UNPROCESSABLE_ENTITY,
   TOO_MANY_REQUESTS
-} from "../util";
+} from "../const";
 
 const state = {
   user: null,
@@ -30,8 +30,11 @@ const mutations = {
   setLoginErrorMessages(state, messages) {
     state.loginErrorMessages = messages;
   },
-  setResisterErrorMessages(state, messages) {
+  setRegisterErrorMessages(state, messages) {
     state.registerErrorMessages = messages;
+  },
+  setForgotErrorMessages(state, messages) {
+    state.setForgotErrorMessages = messages;
   },
 }
 
@@ -108,7 +111,7 @@ const actions = {
   async currentUser(context) {
 
     context.commit("setApiStatus", null);
-    const response = await axios.get("/api/usr");
+    const response = await axios.get("/api/user");
 
     const user = response.data || null;
 
