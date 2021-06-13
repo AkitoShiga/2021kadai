@@ -2,12 +2,12 @@
 
 namespace App\Models\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+//use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class RegisterUser extends Model
 {
-    use HasFactory;
+    //use HasFactory;
     protected $table = 'register_users';
     protected $primaryKey = 'email';
     protected $keyType = 'string';

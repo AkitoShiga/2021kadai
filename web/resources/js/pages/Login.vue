@@ -189,7 +189,7 @@ export default {
     },
     async register() {
 
-      alert("register");
+      //alert("register");
       await this.$store.dispatch(
         "auth/register",
         this.registerForm

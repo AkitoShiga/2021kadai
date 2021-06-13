@@ -1,6 +1,6 @@
 //TODO 冗長な部分を共通関数にするのと、読みにくい所を修正する
 
-import axios from "axios";
+//import axios from "axios";
 import {
   OK,
   CREATED,
@@ -13,6 +13,7 @@ const state = {
   apiStatus: null,
   loginErrorMessages: null,
   registerErrorMessages: null,
+  forgotErrorMessages: null,
 }
 
 const getters = {
@@ -68,8 +69,8 @@ const actions = {
   },
   async register(context, data) {
 
-    context.commit("setApiStatus", null)
-    const response = await axios.post("/api/register", data)
+    context.commit("setApiStatus", null);
+    const response = await axios.post("/api/register", data);
 
     if(response.status === CREATED) {
 

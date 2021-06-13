@@ -2299,11 +2299,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                alert("register");
-                _context2.next = 3;
+                _context2.next = 2;
                 return _this2.$store.dispatch("auth/register", _this2.registerForm);
 
-              case 3:
+              case 2:
                 if (_this2.apiStatus) {
                   _this2.$store.commit("message/setContent", {
                     content: "認証メールを送信しました",
@@ -2315,7 +2314,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this2.clearForm();
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -2379,7 +2378,7 @@ __webpack_require__.r(__webpack_exports__);
 
 window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 window.axios.interceptors.request.use(function (config) {
   var xsrfToken = js_cookie__WEBPACK_IMPORTED_MODULE_0___default().get("XSRF-TOKEN");
   config.headers["X-XSRF-TOKEN"] = xsrfToken;
@@ -2490,9 +2489,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2500,13 +2497,14 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 //TODO 冗長な部分を共通関数にするのと、読みにくい所を修正する
-
+//import axios from "axios";
 
 var state = {
   user: null,
   apiStatus: null,
   loginErrorMessages: null,
-  registerErrorMessages: null
+  registerErrorMessages: null,
+  forgotErrorMessages: null
 };
 var getters = {
   check: function check(state) {
@@ -2543,12 +2541,12 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/login", data);
+              return axios.post("/api/login", data);
 
             case 3:
               response = _context.sent;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.OK)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.OK)) {
                 _context.next = 7;
                 break;
               }
@@ -2560,7 +2558,7 @@ var actions = {
             case 7:
               context.commit("setApiStatus", false);
 
-              if (response.status === _const__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY || response.status === _const__WEBPACK_IMPORTED_MODULE_2__.TOO_MANY_REQUESTS) {
+              if (response.status === _const__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY || response.status === _const__WEBPACK_IMPORTED_MODULE_1__.TOO_MANY_REQUESTS) {
                 context.commit("setLoginErrorMessages", response.data.errors);
               } else {
                 context.commit("error/setCode", response.status, {
@@ -2585,12 +2583,12 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context2.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/register", data);
+              return axios.post("/api/register", data);
 
             case 3:
               response = _context2.sent;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.CREATED)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
                 _context2.next = 8;
                 break;
               }
@@ -2602,7 +2600,7 @@ var actions = {
             case 8:
               context.commit("setApiStatus", false);
 
-              if (response.status === _const__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY) {
+              if (response.status === _const__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY) {
                 context.commit("setRegisterErrorMessages", response.data.errors);
               } else {
                 context.commit("error/setCode", response.status, {
@@ -2627,12 +2625,12 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context3.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/logout");
+              return axios.post("/api/logout");
 
             case 3:
               response = _context3.sent;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.OK)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.OK)) {
                 _context3.next = 8;
                 break;
               }
@@ -2664,13 +2662,13 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context4.next = 3;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/user");
+              return axios.get("/api/user");
 
             case 3:
               response = _context4.sent;
               user = response.data || null;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.OK)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.OK)) {
                 _context4.next = 9;
                 break;
               }

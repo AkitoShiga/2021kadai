@@ -15,7 +15,7 @@ class RegisterUsersTable extends Migration
     {
         Schema::create(
             'register_users',
-            function (Brueprint $table)
+            function (Blueprint $table)
             {
                 $table->string('email')->index();
                 $table->string('token');

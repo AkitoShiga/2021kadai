@@ -20,6 +20,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 */
+//Route::get('/verification/{token}', 'Auth\VerificationController@register') ->name('verification');
+Route::get('/verification/{token}', [App\Http\Controllers\Auth\VerificationController::class, 'register']);
 Route::get('/{any?}', function(){return view('index');})->where('any', '.+');
-Route::get('/verification/{token}', 'Auth\VerificationController@register')
-    ->name('verification');

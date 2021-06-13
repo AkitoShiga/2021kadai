@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\User;
-use App\Models\RegisterUser;
+use App\Models\User;
+use App\Models\Models\RegisterUser;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -79,7 +79,7 @@ class VerificationController extends Controller
 
     /**
      * redirect with message
-     * @param string $vueRout
+     * @param string $vueRoute
      * @param string $message
      * @return Redirect
      */
