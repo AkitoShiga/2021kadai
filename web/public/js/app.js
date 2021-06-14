@@ -2001,11 +2001,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      isLogin: false
-    };
-  },
+  //data() { return { isLogin: false, } },
   methods: {
     logout: function logout() {
       var _this = this;
@@ -2034,7 +2030,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   watch: {
     isLogin: function isLogin() {
-      this.data.isLogin = this.$store.getters.auth.check();
+      //this.isLogin  =
+      return this.$store.auth.getters.check;
     },
     immideate: true
   }

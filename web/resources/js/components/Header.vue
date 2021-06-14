@@ -13,11 +13,7 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      isLogin: false,
-    }
-  },
+  //data() { return { isLogin: false, } },
   methods: {
     async logout(){
 
@@ -32,7 +28,8 @@ export default {
   },
   watch: {
     isLogin: function() {
-      this.data.isLogin  = this.$store.getters.auth.check();
+      //this.isLogin  =
+      return this.$store.auth.getters.check
     },
     immideate: true
   },
