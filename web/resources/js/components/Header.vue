@@ -13,7 +13,6 @@
 </template>
 <script>
 export default {
-  //data() { return { isLogin: false, } },
   methods: {
     async logout(){
 
@@ -26,12 +25,17 @@ export default {
       }
     }
   },
-  watch: {
-    isLogin: function() {
-      //this.isLogin  =
-      return this.$store.auth.getters.check
+  computed: {
+    isLogin : function() {
+
+      return this.$store.getters["auth/check"];
+
     },
-    immideate: true
   },
+  watch :{
+    isLogin: function() {
+
+    }
+  }
 };
 </script>

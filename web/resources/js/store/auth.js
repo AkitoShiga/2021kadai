@@ -19,6 +19,7 @@ const state = {
 const getters = {
   check: state => !!state.user,
   username: state => (state.user ? state.user.name : ""),
+  userData: state => state.user,
 }
 
 const mutations = {
@@ -49,7 +50,7 @@ const actions = {
     if (response.status === OK) {
 
       context.commit("setApiStatus", true);
-      //context.commit("setUser", response.data);
+      context.commit("setUser", response.data);
       return false;
 
     }

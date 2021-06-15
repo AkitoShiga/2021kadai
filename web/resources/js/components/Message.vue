@@ -9,7 +9,7 @@
 export default {
   computed: {
     message() {
-      return this.$store.state.message.content;
+      return this.$store.getters["auth/check"];
     },
   },
 }
