@@ -74,6 +74,7 @@ class VerificationController extends Controller
           'email' => $data['email'],
           'email_verified_at' => now(),
           'password' => $data['password'],
+          'image_path' => '',
         ]);
     }
 
