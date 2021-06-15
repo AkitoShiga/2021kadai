@@ -2057,6 +2057,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   computed: {
     message: function message() {
@@ -21795,12 +21796,7 @@ var render = function() {
       _c("Header"),
       _vm._v(" "),
       _c("main", [
-        _c(
-          "div",
-          { staticClass: "container" },
-          [_c("Message"), _vm._v(" "), _c("RouterView")],
-          1
-        ),
+        _c("div", { staticClass: "container" }, [_c("RouterView")], 1),
         _vm._v(" "),
         _c("div", { staticClass: "container" })
       ])
@@ -21883,7 +21879,7 @@ var render = function() {
       ],
       staticClass: "message"
     },
-    [_vm._v(_vm._s(_vm.message))]
+    [_vm._v(_vm._s(_vm.message) + "\n")]
   )
 }
 var staticRenderFns = []

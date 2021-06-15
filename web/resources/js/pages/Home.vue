@@ -19,10 +19,14 @@
 </template>
 
 <script>
+
 export default {
+
   data () {
     return {
+
      userData: this.$store.getters["auth/userData"],
+
     }
   },
   computed: {

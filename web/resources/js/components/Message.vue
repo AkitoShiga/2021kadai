@@ -2,7 +2,8 @@
   <div
     class="message"
     v-show="message"
-  >{{ message }}</div>
+  >{{ message }}
+  </div>
 </template>
 
 <script>
