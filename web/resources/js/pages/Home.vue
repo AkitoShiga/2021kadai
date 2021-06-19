@@ -2,6 +2,7 @@
   <div class="container">
     <h1>Home</h1>
     <div v-if="isLogin">
+      <Images />
       <div>
         <span>番号 : </span> {{ userData.id }}
       </div>
@@ -19,15 +20,17 @@
 </template>
 
 <script>
-
+import Images from '../components/Images.vue'
 export default {
-
   data () {
     return {
 
      userData: this.$store.getters["auth/userData"],
 
     }
+  },
+  components: {
+    Images
   },
   computed: {
 

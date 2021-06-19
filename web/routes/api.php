@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ImageApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,4 @@ Route::get('/refresh-token', function(Illuminate\Http\Request $request) {
     $request->session()->regenerateToken();
     return response()->json();
 })->name('refresh-token');
+Route::get('/images', [ImageApiController::class, 'index']);
