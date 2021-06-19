@@ -1,49 +1,46 @@
 <template>
 <div>
-  <p v-if="true">
-    <img class="image" :src="'/Images/noImage.gif'" />
-  <p v-else>
-    <img class="image" :src="defaultImage" />
-  </p>
+  <p v-if="hasImage">
+    <img class="image" :src="imagePath" />
+  <p>{{ imagePath }}</p>
   <p>{{ message }}</p>
+  <input type="file" @change="confirmImage" v-if="view"/>
   <p>
     <button @click="uploadImage">アップロード</button>
   </p>
-  <table border="1">
-    <tr>
-      <th>プロフィール画像</th>
-    </tr>
-    <tr v-for="image in images" :key="image.id">
-      <td>{{ image.title }}</td>
-      <td><img class="image" :src="`${image.path}`" /></td>
-    </tr>
-  </table>
 </div>
 </template>
-
 <script>
 export default {
-  data(){
+  data() {
     return {
       message: "",
       file: "",
       view: true,
-      images: {},
+      image: "",
       confirmedImage: "",
+      userData: this.$store.getters["auth/userData"],
     };
   },
   created: function() {
-    this.getImage();
+    //ここにユーザー情報を引数で渡す必要がある
+    this.getImage(this.userData.id);
   },
   computed: {
+    hasImage: function() {
+      return this.image !== "";
+    },
+    imagePath: function() {
+      return this.image;
+    }
   },
   methods: {
-    getImage() {
+    getImage(user_id) {
+    let query = { user_id: user_id };
       axios
-        .get("api/images")
+        .get("api/images", { params: query })
         .then(response => {
-          this.images = response.data;
-          this.test = response.data;
+          this.image = response.data;
         })
         .catch(error => {
           this.message = error;
@@ -59,17 +56,17 @@ export default {
       }
       this.createImage(this.file);
     },
-    createImage(file) {
+    uploadImage(file) {
+      //ここにユーザーID渡す
       let reader = new FileReader();
       data.append("file", this.file);
-      data.append("title", this.title);
+      data.append("user_id", this.userData.id);
       axios
         .post("/api/images/", data)
         .then(response => {
           this.getImage();
           this.message = response.data.success;
           this.confimedImage = "";
-          this.title = "";
           this.file = "";
 
           this.view =false;
@@ -80,7 +77,14 @@ export default {
         .catch(error => {
           this.message = error.response.data.errors;
         })
-    }
+    },
+    cereateImage(file) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = e => {
+        this.confirmedImage = e.target.result;
+      };
+    },
   }
 }
 </script>

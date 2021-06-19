@@ -27,10 +27,7 @@ const routes = [
         path: '/500',
         component: SystemError
     },
-    {
-        path: "*",
-        component: NotFound
-    },
+    //{ path: "*", component: NotFound },
 ]
 
 const router = new VueRouter({

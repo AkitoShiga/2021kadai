@@ -29,4 +29,4 @@ Route::get('/refresh-token', function(Illuminate\Http\Request $request) {
     $request->session()->regenerateToken();
     return response()->json();
 })->name('refresh-token');
-Route::get('/images', [ImageApiController::class, 'index']);
+Route::get('/images', [ImageApiController::class, 'getImage']);

@@ -3,31 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Models\Image;
+use App\Models\Image;
 
 class ImageApiController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @return string $user_id
      */
-    public function index()
+    public function getImage(Request $request)
     {
-        //TODO 論理削除されていない単一の値を取る必要がある
-        $has_image = false;
-        //既存のイメージがあるか判定する関数
+        //なぜかこうしないとクエリパラメータ-が取得できない
+        $user_id =$request->all()['user_id'];
+        $image = Image::where('user_id', $user_id)->where('is_delete', false)->first();
+        $has_image = is_null($image);
 
-        //もしなかったらデフォルトイメージを返す
-        if($has_image) {
-            //デフォルトのイメージを返す処理
+        if(!$has_image) {
+
+            return $image->path;
+
         } else {
-            //単一の値を返す必要がある
-            //return Image::all();
-            return 'storage/app/public/noImage.gif';
+
+            return '/storage/noImage.gif';
 
         }
-
     }
 
     /**
@@ -50,18 +50,23 @@ class ImageApiController extends Controller
         if (request()->file) {
             $has_old_image = false;
             // すでに登録されているデータがあるか？
+            $user_id = request()->user_id;
+            $old_image = Image::where('user_id', $user_id)->where('is_delete', false)->first();
+            $has_old_image = is_null($old_image);
             if(has_old_image) {
-                //既存のイメージを論理削除
+                //既存のイメージを論理削除 $old_image->is_delete = true;
+                $flight->save();
+
             }
 
-            $file_name = random_bytes (10);
+            $file_name = random_bytes (2).request()->file->getClientOriginalName();
             request()->file->storeAs('public', $file_name);
 
-            $image = new Image();
-            $image->path = 'storage/' . $file_name;
-            $image->is_delete = false;
-            $image->user_id = $request->user_id;
-            $image->save();
+            $new_image = new Image();
+            $new_image->path = 'storage/' . $file_name;
+            $new_image->is_delete = false;
+            $new_image->user_id = $request->user_id;
+            $new_image->save();
 
             return['success' => '登録しました！'];
 

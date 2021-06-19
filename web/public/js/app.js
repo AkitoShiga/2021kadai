@@ -2062,38 +2062,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       message: "",
       file: "",
       view: true,
-      images: {},
-      confirmedImage: ""
+      image: "",
+      confirmedImage: "",
+      userData: this.$store.getters["auth/userData"]
     };
   },
   created: function created() {
-    this.getImage();
+    //ここにユーザー情報を引数で渡す必要がある
+    this.getImage(this.userData.id);
   },
-  computed: {},
+  computed: {
+    hasImage: function hasImage() {
+      return this.image !== "";
+    },
+    imagePath: function imagePath() {
+      return this.image;
+    }
+  },
   methods: {
-    getImage: function getImage() {
+    getImage: function getImage(user_id) {
       var _this = this;
 
-      axios.get("api/images").then(function (response) {
-        _this.images = response.data;
-        _this.test = response.data;
+      var query = {
+        user_id: user_id
+      };
+      axios.get("api/images", {
+        params: query
+      }).then(function (response) {
+        _this.image = response.data;
       })["catch"](function (error) {
         _this.message = error;
       });
@@ -2110,18 +2112,18 @@ __webpack_require__.r(__webpack_exports__);
 
       this.createImage(this.file);
     },
-    createImage: function createImage(file) {
+    uploadImage: function uploadImage(file) {
       var _this2 = this;
 
+      //ここにユーザーID渡す
       var reader = new FileReader();
       data.append("file", this.file);
-      data.append("title", this.title);
+      data.append("user_id", this.userData.id);
       axios.post("/api/images/", data).then(function (response) {
         _this2.getImage();
 
         _this2.message = response.data.success;
         _this2.confimedImage = "";
-        _this2.title = "";
         _this2.file = "";
         _this2.view = false;
 
@@ -2131,6 +2133,16 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         _this2.message = error.response.data.errors;
       });
+    },
+    cereateImage: function cereateImage(file) {
+      var _this3 = this;
+
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function (e) {
+        _this3.confirmedImage = e.target.result;
+      };
     }
   }
 });
@@ -2612,10 +2624,8 @@ var routes = [{
 }, {
   path: '/500',
   component: _pages_errors_SystemError_vue__WEBPACK_IMPORTED_MODULE_4__.default
-}, {
-  path: "*",
-  component: _pages_errors_NotFound_vue__WEBPACK_IMPORTED_MODULE_3__.default
-}];
+} //{ path: "*", component: NotFound },
+];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__.default({
   mode: 'history',
   routes: routes
@@ -22086,52 +22096,28 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-     true
+    _vm.hasImage
       ? _c("p", [
-          _c("img", {
-            staticClass: "image",
-            attrs: { src: "/Images/noImage.gif" }
-          })
+          _c("img", { staticClass: "image", attrs: { src: _vm.imagePath } })
         ])
-      : 0,
+      : _vm._e(),
+    _c("p", [_vm._v(_vm._s(_vm.imagePath))]),
     _vm._v(" "),
     _c("p", [_vm._v(_vm._s(_vm.message))]),
     _vm._v(" "),
+    _vm.view
+      ? _c("input", {
+          attrs: { type: "file" },
+          on: { change: _vm.confirmImage }
+        })
+      : _vm._e(),
+    _vm._v(" "),
     _c("p", [
       _c("button", { on: { click: _vm.uploadImage } }, [_vm._v("アップロード")])
-    ]),
-    _vm._v(" "),
-    _c(
-      "table",
-      { attrs: { border: "1" } },
-      [
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._l(_vm.images, function(image) {
-          return _c("tr", { key: image.id }, [
-            _c("td", [_vm._v(_vm._s(image.title))]),
-            _vm._v(" "),
-            _c("td", [
-              _c("img", {
-                staticClass: "image",
-                attrs: { src: "" + image.path }
-              })
-            ])
-          ])
-        })
-      ],
-      2
-    )
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [_c("th", [_vm._v("プロフィール画像")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
