@@ -2644,8 +2644,10 @@ var routes = [{
 }, {
   path: '/500',
   component: _pages_errors_SystemError_vue__WEBPACK_IMPORTED_MODULE_4__.default
-} //{ path: "*", component: NotFound },
-];
+}, {
+  path: "*",
+  component: _pages_errors_NotFound_vue__WEBPACK_IMPORTED_MODULE_3__.default
+}];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__.default({
   mode: 'history',
   routes: routes
