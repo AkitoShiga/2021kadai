@@ -2112,15 +2112,21 @@ __webpack_require__.r(__webpack_exports__);
 
       this.createImage(this.file);
     },
-    uploadImage: function uploadImage(file) {
+    uploadImage: function uploadImage() {
       var _this2 = this;
 
-      //ここにユーザーID渡す
+      var arr = this.getCookieArray();
+      var data = new FormData();
       var reader = new FileReader();
+      var token = arr['XSRF-TOKEN'];
+      var header = {
+        'X-XSRF-TOKEN': token
+      };
       data.append("file", this.file);
       data.append("user_id", this.userData.id);
-      axios.post("/api/images/", data).then(function (response) {
-        _this2.getImage();
+      axios //.post("/api/images/", data,header)
+      .post("/api/images/", data).then(function (response) {
+        _this2.getImage(_this2.userData.id);
 
         _this2.message = response.data.success;
         _this2.confimedImage = "";
@@ -2134,7 +2140,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.message = error.response.data.errors;
       });
     },
-    cereateImage: function cereateImage(file) {
+    createImage: function createImage(file) {
       var _this3 = this;
 
       var reader = new FileReader();
@@ -2143,6 +2149,20 @@ __webpack_require__.r(__webpack_exports__);
       reader.onload = function (e) {
         _this3.confirmedImage = e.target.result;
       };
+    },
+    getCookieArray: function getCookieArray() {
+      var arr = new Array();
+
+      if (document.cookie != '') {
+        var tmp = document.cookie.split('; ');
+
+        for (var i = 0; i < tmp.length; i++) {
+          var data = tmp[i].split('=');
+          arr[data[0]] = decodeURIComponent(data[1]);
+        }
+      }
+
+      return arr;
     }
   }
 });
@@ -2647,7 +2667,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2655,7 +2677,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 //TODO 冗長な部分を共通関数にするのと、読みにくい所を修正する
-//import axios from "axios";
+
 
 var state = {
   user: null,
@@ -2702,12 +2724,12 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context.next = 3;
-              return axios.post("/api/login", data);
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/login", data);
 
             case 3:
               response = _context.sent;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.OK)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.OK)) {
                 _context.next = 8;
                 break;
               }
@@ -2719,7 +2741,7 @@ var actions = {
             case 8:
               context.commit("setApiStatus", false);
 
-              if (response.status === _const__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY || response.status === _const__WEBPACK_IMPORTED_MODULE_1__.TOO_MANY_REQUESTS) {
+              if (response.status === _const__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY || response.status === _const__WEBPACK_IMPORTED_MODULE_2__.TOO_MANY_REQUESTS) {
                 context.commit("setLoginErrorMessages", response.data.errors);
               } else {
                 context.commit("error/setCode", response.status, {
@@ -2744,12 +2766,12 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context2.next = 3;
-              return axios.post("/api/register", data);
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/register", data);
 
             case 3:
               response = _context2.sent;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.CREATED)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.CREATED)) {
                 _context2.next = 8;
                 break;
               }
@@ -2761,7 +2783,7 @@ var actions = {
             case 8:
               context.commit("setApiStatus", false);
 
-              if (response.status === _const__WEBPACK_IMPORTED_MODULE_1__.UNPROCESSABLE_ENTITY) {
+              if (response.status === _const__WEBPACK_IMPORTED_MODULE_2__.UNPROCESSABLE_ENTITY) {
                 context.commit("setRegisterErrorMessages", response.data.errors);
               } else {
                 context.commit("error/setCode", response.status, {
@@ -2786,12 +2808,12 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context3.next = 3;
-              return axios.post("/api/logout");
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().post("/api/logout");
 
             case 3:
               response = _context3.sent;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.OK)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.OK)) {
                 _context3.next = 8;
                 break;
               }
@@ -2823,13 +2845,13 @@ var actions = {
             case 0:
               context.commit("setApiStatus", null);
               _context4.next = 3;
-              return axios.get("/api/user");
+              return axios__WEBPACK_IMPORTED_MODULE_1___default().get("/api/user");
 
             case 3:
               response = _context4.sent;
               user = response.data || null;
 
-              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_1__.OK)) {
+              if (!(response.status === _const__WEBPACK_IMPORTED_MODULE_2__.OK)) {
                 _context4.next = 9;
                 break;
               }

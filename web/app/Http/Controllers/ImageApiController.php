@@ -53,22 +53,34 @@ class ImageApiController extends Controller
             $user_id = request()->user_id;
             $old_image = Image::where('user_id', $user_id)->where('is_delete', false)->first();
             $has_old_image = is_null($old_image);
-            if(has_old_image) {
-                //既存のイメージを論理削除 $old_image->is_delete = true;
-                $flight->save();
+            $file_name = mb_convert_encoding(
+                str_shuffle('1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.now())
+                .request()->file->getClientOriginalName(),
+                'UTF-8',
+                'UTF-8'
 
-            }
-
-            $file_name = random_bytes (2).request()->file->getClientOriginalName();
+            );
             request()->file->storeAs('public', $file_name);
 
             $new_image = new Image();
+            $new_image->user_id = $request->user_id;
             $new_image->path = 'storage/' . $file_name;
             $new_image->is_delete = false;
-            $new_image->user_id = $request->user_id;
+            $new_image->created_at = now();
+            $new_image->updated_at = now();
             $new_image->save();
 
-            return['success' => '登録しました！'];
+            if(!$has_old_image) {
+                //既存のイメージを論理削除
+
+                $old_image->is_delete = true;
+                $old_image->save();
+
+            }
+
+
+            //return['success' => '登録しました！'];
+            return ['success' => $file_name];
 
         }
     }

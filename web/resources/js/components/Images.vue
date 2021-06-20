@@ -56,15 +56,21 @@ export default {
       }
       this.createImage(this.file);
     },
-    uploadImage(file) {
-      //ここにユーザーID渡す
+    uploadImage() {
+      let arr = this.getCookieArray();
+      let data = new FormData();
       let reader = new FileReader();
+      let token = arr['XSRF-TOKEN'];
+      let header = {
+        'X-XSRF-TOKEN': token
+      }
       data.append("file", this.file);
       data.append("user_id", this.userData.id);
       axios
+        //.post("/api/images/", data,header)
         .post("/api/images/", data)
         .then(response => {
-          this.getImage();
+          this.getImage(this.userData.id);
           this.message = response.data.success;
           this.confimedImage = "";
           this.file = "";
@@ -78,13 +84,24 @@ export default {
           this.message = error.response.data.errors;
         })
     },
-    cereateImage(file) {
+    createImage(file) {
       let reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = e => {
         this.confirmedImage = e.target.result;
       };
     },
+    getCookieArray(){
+    var arr = new Array();
+    if(document.cookie != ''){
+        var tmp = document.cookie.split('; ');
+        for(var i=0;i<tmp.length;i++){
+            var data = tmp[i].split('=');
+            arr[data[0]] = decodeURIComponent(data[1]);
+        }
+    }
+    return arr;
+}
   }
 }
 </script>

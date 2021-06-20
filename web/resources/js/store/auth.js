@@ -1,6 +1,6 @@
 //TODO 冗長な部分を共通関数にするのと、読みにくい所を修正する
 
-//import axios from "axios";
+import axios from "axios";
 import {
   OK,
   CREATED,
