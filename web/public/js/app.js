@@ -22133,11 +22133,11 @@ var render = function() {
   return _c("div", [
     _vm.hasImage
       ? _c("p", [
-          _c("img", { staticClass: "image", attrs: { src: _vm.imagePath } }),
-          _vm._v(" "),
-          _c("span", [_vm._v(_vm._s(_vm.message))])
+          _c("img", { staticClass: "image", attrs: { src: _vm.imagePath } })
         ])
       : _vm._e(),
+    _c("p", [_vm._v(_vm._s(_vm.message))]),
+    _vm._v(" "),
     _c("p", [_vm._v("プロフィール画像")]),
     _vm._v(" "),
     _vm.view

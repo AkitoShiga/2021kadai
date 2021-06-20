@@ -2,7 +2,7 @@
 <div>
   <p v-if="hasImage">
     <img class="image" :src="imagePath" />
-  <span>{{ message }}</span>
+  <p>{{ message }}</p>
   <p>プロフィール画像</p>
   <input type="file" @change="confirmImage" v-if="view"/>
   <p>

@@ -38,7 +38,6 @@ class ImageApiController extends Controller
      */
     public function store(Request $request)
     {
-        //TODO ここに既存のイメージを論理削除する処理が必要
         $this->validate($request, [
             'user_id' => 'required|min: 1',
             'file' => 'required|image'
@@ -47,18 +46,17 @@ class ImageApiController extends Controller
             'file.required' => '画像が選択されていません',
             'file.image' => '画像ファイルではありません'
         ]);
+
         if (request()->file) {
-            $has_old_image = false;
-            // すでに登録されているデータがあるか？
+
             $user_id = request()->user_id;
-            $old_image = Image::where('user_id', $user_id)->where('is_delete', false)->first();
-            $has_old_image = is_null($old_image);
+            $has_old_image = false;
+
             $file_name = mb_convert_encoding(
                 str_shuffle('1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.now())
                 .request()->file->getClientOriginalName(),
                 'UTF-8',
                 'UTF-8'
-
             );
             request()->file->storeAs('public', $file_name);
 
@@ -70,17 +68,20 @@ class ImageApiController extends Controller
             $new_image->updated_at = now();
             $new_image->save();
 
+            $old_image = Image::where('user_id', $user_id)->where('is_delete', false)->first();
+            $has_old_image = is_null($old_image);
             if(!$has_old_image) {
-                //既存のイメージを論理削除
 
                 $old_image->is_delete = true;
                 $old_image->save();
 
             }
 
+            return['success' => '登録しました'];
 
-            //return['success' => '登録しました！'];
-            return ['success' => $file_name];
+        } else {
+
+            return['error' => '登録失敗'];
 
         }
     }
