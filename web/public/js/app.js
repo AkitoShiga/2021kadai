@@ -2416,6 +2416,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -22049,7 +22052,12 @@ var render = function() {
       _c("Header"),
       _vm._v(" "),
       _c("main", [
-        _c("div", { staticClass: "container" }, [_c("RouterView")], 1),
+        _c(
+          "div",
+          { staticClass: "container" },
+          [_c("Message"), _vm._v(" "), _c("RouterView")],
+          1
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "container" })
       ])
@@ -22283,20 +22291,6 @@ var render = function() {
           }
         },
         [_vm._v("Register")]
-      ),
-      _vm._v(" "),
-      _c(
-        "li",
-        {
-          staticClass: "tab_item",
-          class: { "tab_item--active": _vm.tab === 3 },
-          on: {
-            click: function($event) {
-              _vm.tab = 3
-            }
-          }
-        },
-        [_vm._v("Forgot password?")]
       )
     ]),
     _vm._v(" "),
@@ -22572,64 +22566,6 @@ var render = function() {
           ]
         )
       ]
-    ),
-    _vm._v(" "),
-    _c(
-      "section",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.tab === 3,
-            expression: "tab === 3"
-          }
-        ],
-        staticClass: "forgot"
-      },
-      [
-        _c("h2", [_vm._v("Forgot")]),
-        _vm._v(" "),
-        _c(
-          "form",
-          {
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.forgot.apply(null, arguments)
-              }
-            }
-          },
-          [
-            _c("div", [_vm._v("Email")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.forgotForm.email,
-                    expression: "forgotForm.email"
-                  }
-                ],
-                attrs: { type: "email" },
-                domProps: { value: _vm.forgotForm.email },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.forgotForm, "email", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm._m(2)
-          ]
-        )
-      ]
     )
   ])
 }
@@ -22648,14 +22584,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", [
       _c("button", { attrs: { type: "submit" } }, [_vm._v("register")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("button", { attrs: { type: "submit" } }, [_vm._v("send")])
     ])
   }
 ]

@@ -12,11 +12,13 @@
         :class="{ 'tab_item--active': tab === 2}"
         @click="tab = 2"
       >Register</li>
+      <!--未実装
       <li
         class="tab_item"
         :class="{ 'tab_item--active': tab === 3 }"
         @click="tab = 3"
       >Forgot password?</li>
+      -->
     </ul>
 
     <section
@@ -122,7 +124,7 @@
         </div>
       </form>
     </section>
-
+<!-- 未実装
     <section
       class="forgot"
       v-show="tab === 3"
@@ -141,6 +143,7 @@
         </div>
       </form>
     </section>
+-->
 
   </div>
 </template>

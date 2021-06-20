@@ -3,7 +3,7 @@
   <Header/>
   <main>
     <div class="container">
-      <!--<Message/>-->
+      <Message/>
       <RouterView/>
     </div>
     <div class="container">
