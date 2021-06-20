@@ -10,6 +10,7 @@ app/storage/
 # Laravel 5 & Lumen specific
 public/storage
 public/hot
+web/.env
 
 # Laravel 5 & Lumen specific with changed public path
 public_html/storage
@@ -24,8 +25,8 @@ Homestead.json
 
 # docker
 .env
-./docker/containers/nginx/logs/*
-./app/.env
-./app/.tags
+docker/containers/nginx/logs/
+app/.env
+app/.tags
 
 

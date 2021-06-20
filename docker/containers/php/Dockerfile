@@ -29,6 +29,9 @@ RUN { \
   echo 'opcache.max_accelerated_files=4000'; \
   echo 'opcache.revalidate_freq=60'; \
   echo 'opcache.fast_shutdown=1'; \
+  echo 'upload_max_filesize = 1024M'; \
+  echo 'post_max_size = 1024M'; \
+  echo 'memory_limit = 512M'; \
 } > /usr/local/etc/php/conf.d/overrides.ini
 RUN { \
   echo 'xdebug.remote_enable=1'; \
