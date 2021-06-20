@@ -10,7 +10,9 @@
 export default {
   computed: {
     message() {
-      return this.$store.getters["auth/check"];
+
+      return this.$store.getters["auth/check"]? "ログイン♡" : "未ログイン";
+
     },
   },
 }
